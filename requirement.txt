@@ -1,0 +1,7 @@
+transformers              4.3.0
+tqdm                          4.60.0 
+pytorch                      1.9.1
+python                       3.6.13
+
+pytorch_warmup       Please follow https://github.com/Tony-Y/pytorch_warmup to install
+chinese_roberta        Please visit https://drive.google.com/file/d/1eHM3l4fMo6DsQYGmey7UZGiTmQquHw25/view to download  and put it in src/chinese_roberta
