@@ -6,6 +6,7 @@ from src.train_and_evaluate_divide_dice import *
 
 import time
 import torch.optim
+import argparse
 
 from src.expressions_transfer import *
 from tqdm import tqdm
@@ -13,6 +14,23 @@ from tqdm import tqdm
 
 import torch.nn.utils.prune as prune
 import pytorch_warmup as warmup
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Math23K Model with Dice Loss')
+    parser.add_argument('--batch_size', type=int, default=16, help='Training batch size')
+    parser.add_argument('--learning_rate', type=float, default=5e-5, help='Learning rate')
+    parser.add_argument('--hidden_size', type=int, default=1024, help='Hidden layer dimension')
+    parser.add_argument('--embedding_size', type=int, default=1024, help='Embedding dimension')
+    parser.add_argument('--n_epochs', type=int, default=80, help='Number of training epochs')
+    parser.add_argument('--beam_size', type=int, default=5, help='Beam search size')
+    parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate')
+    parser.add_argument('--model_name', type=str, default='roberta', help='Pretrained model name')
+    parser.add_argument('--use_ape', type=str, default='false', help='Use APE dataset (true/false)')
+    parser.add_argument('--warmup_period', type=int, default=3000, help='Warmup steps')
+    parser.add_argument('--contra_weight', type=float, default=0.005, help='Contrastive loss weight')
+    parser.add_argument('--test_interval', type=int, default=5, help='Test interval (epochs)')
+    return parser.parse_args()
 
 
 def read_json(path):
@@ -78,41 +96,57 @@ def get_train_test_fold(ori_path, prefix, data, pairs):
 
 
 
-batch_size = 16
+# Parse command line arguments
+args = parse_args()
 
-hidden_size =config.hidden_size# 512
+# Override config with command line arguments
+batch_size = args.batch_size
+hidden_size = args.hidden_size
+learning_rate = args.learning_rate
+embedding_size = args.embedding_size
+n_epochs = args.n_epochs
+beam_size = args.beam_size
+model_name = args.model_name
+warmup_period = args.warmup_period
+contra_weight = args.contra_weight
+test_interval = args.test_interval
 
-learning_rate = 5e-5
+# Update config module
+config.hidden_size = hidden_size
+config.embedding_size = embedding_size
+config.n_epochs = n_epochs
+config.MODEL_NAME = model_name
+config.warmup_period = warmup_period
+config.contra_weight = contra_weight
+config.dropout = args.dropout
+config.test_interval = test_interval
+
 weight_decay = 1e-5
-beam_size = 5
 n_layers = 2
 num_list_text = []
 for d in range(config.quantity_num):
     num_list_text.append('NUM'+str(d))
 
-
-embedding_size = config.embedding_size
-
-if config.MODEL_NAME=='roberta':
+if model_name=='roberta':
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("./src/chinese_roberta/vocab.txt")
     tokenizer.add_special_tokens({'additional_special_tokens':num_list_text})
-elif config.MODEL_NAME=='roberta-large':
+elif model_name=='roberta-large':
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("./src/chinese_roberta_large/vocab.txt")
     tokenizer.add_special_tokens({'additional_special_tokens':num_list_text})
-elif config.MODEL_NAME =='xml-roberta':
+elif model_name =='xml-roberta':
     from transformers import XLMRobertaTokenizer
     tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-large')
     tokenizer.additional_special_tokens = tokenizer.additional_special_tokens + num_list_text
-elif config.MODEL_NAME =='xml-roberta-base':
+elif model_name =='xml-roberta-base':
     from transformers import XLMRobertaTokenizer
     tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base')
     tokenizer.additional_special_tokens = tokenizer.additional_special_tokens + num_list_text
-elif config.MODEL_NAME =='bert-base-chinese':
+elif model_name =='bert-base-chinese':
     from transformers import AutoTokenizer
-    print("model name:{}".format(config.MODEL_NAME))
-    tokenizer = AutoTokenizer.from_pretrained(config.MODEL_NAME)
+    print("model name:{}".format(model_name))
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 
 vocab_size = len(tokenizer)
@@ -251,7 +285,7 @@ generate_num_ids = []
 for num in generate_nums:
     generate_num_ids.append(output_lang.word2index[num])
 alternate_flag = True
-for epoch in range(1, config.n_epochs+1):
+for epoch in range(1, n_epochs+1):
     
     input_batches, input_lengths, output_batches, output_lengths, nums_batches, num_stack_batches, num_pos_batches, num_size_batches = prepare_train_batch(train_pairs, batch_size)
     print("epoch:", epoch + 1)
@@ -319,7 +353,7 @@ for epoch in range(1, config.n_epochs+1):
 
     print("training time", time_since(time.time() - start))
     print("--------------------------------")
-    if (epoch-1) % config.test_interval == 0 or (epoch-1) > config.n_epochs - 5:
+    if (epoch-1) % test_interval == 0 or (epoch-1) > n_epochs - 5:
         value_ac = 0
         equation_ac = 0
         eval_total = 0
@@ -348,7 +382,7 @@ for epoch in range(1, config.n_epochs+1):
         # torch.save(predict.state_dict(), "models/predict")
         # torch.save(generate.state_dict(), "models/generate")
         # torch.save(merge.state_dict(), "models/merge")
-        if epoch == config.n_epochs - 1:
+        if epoch == n_epochs - 1:
             best_acc_fold.append((equation_ac, value_ac, eval_total))
 
 value_ac = 0

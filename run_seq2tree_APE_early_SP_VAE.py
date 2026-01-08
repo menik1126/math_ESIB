@@ -9,6 +9,7 @@ from src.train_and_evaluate_divide_vae import *
 # from src.models_prune import *
 import time
 import torch.optim
+import argparse
 
 from src.expressions_transfer import *
 from tqdm import tqdm
@@ -19,43 +20,76 @@ import pytorch_warmup as warmup
 import os
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='APE210K Full Model with Early Stopping')
+    parser.add_argument('--batch_size', type=int, default=16, help='Training batch size')
+    parser.add_argument('--learning_rate', type=float, default=5e-5, help='Learning rate')
+    parser.add_argument('--hidden_size', type=int, default=1024, help='Hidden layer dimension')
+    parser.add_argument('--embedding_size', type=int, default=1024, help='Embedding dimension')
+    parser.add_argument('--n_epochs', type=int, default=50, help='Number of training epochs')
+    parser.add_argument('--beam_size', type=int, default=5, help='Beam search size')
+    parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate')
+    parser.add_argument('--model_name', type=str, default='roberta', help='Pretrained model name')
+    parser.add_argument('--use_ape', type=str, default='true', help='Use APE dataset (true/false)')
+    parser.add_argument('--warmup_period', type=int, default=3000, help='Warmup steps')
+    parser.add_argument('--contra_weight', type=float, default=0.005, help='Contrastive loss weight')
+    parser.add_argument('--test_interval', type=int, default=5, help='Test interval (epochs)')
+    return parser.parse_args()
 
-batch_size = 16
-learning_rate = 5e-5
+
+# Parse command line arguments
+args = parse_args()
+
+# Override config with command line arguments
+batch_size = args.batch_size
+hidden_size = args.hidden_size
+learning_rate = args.learning_rate
+embedding_size = args.embedding_size
+n_epochs = args.n_epochs
+beam_size = args.beam_size
+model_name = args.model_name
+warmup_period = args.warmup_period
+contra_weight = args.contra_weight
+test_interval = args.test_interval
+
+# Update config module
+config.hidden_size = hidden_size
+config.embedding_size = embedding_size
+config.n_epochs = n_epochs
+config.MODEL_NAME = model_name
+config.warmup_period = warmup_period
+config.contra_weight = contra_weight
+config.dropout = args.dropout
+config.test_interval = test_interval
+
 weight_decay = 1e-5
-beam_size = 5
 n_layers = 2
-
-hidden_size =config.hidden_size# 512
-embedding_size = config.embedding_size
-# APE dataset
-n_epochs = 50
 
 num_list_text = []
 for d in range(config.quantity_num_ape):
     num_list_text.append('NUM'+str(d))
 
 
-if config.MODEL_NAME=='roberta':
+if model_name=='roberta':
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("./src/chinese_roberta/vocab.txt")
     tokenizer.add_special_tokens({'additional_special_tokens':num_list_text})
-elif config.MODEL_NAME=='roberta-large':
+elif model_name=='roberta-large':
     from transformers import BertTokenizer
     tokenizer = BertTokenizer.from_pretrained("./src/chinese_roberta_large/vocab.txt")
     tokenizer.add_special_tokens({'additional_special_tokens':num_list_text})
-elif config.MODEL_NAME =='xml-roberta':
+elif model_name =='xml-roberta':
     from transformers import XLMRobertaTokenizer
-    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-large')#("./src/chinese_roberta/vocab.txt")#, additional_special_tokens = num_list_text )
-    #tokenizer.
-    #special_tokens_dict = {'additional_special_tokens': num_list_text}
+    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-large')
     tokenizer.additional_special_tokens = tokenizer.additional_special_tokens + num_list_text
-elif config.MODEL_NAME =='xml-roberta-base':
+elif model_name =='xml-roberta-base':
     from transformers import XLMRobertaTokenizer
-    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base')#("./src/chinese_roberta/vocab.txt")#, additional_special_tokens = num_list_text )
-    #tokenizer.
-    #special_tokens_dict = {'additional_special_tokens': num_list_text}
+    tokenizer = XLMRobertaTokenizer.from_pretrained('xlm-roberta-base')
     tokenizer.additional_special_tokens = tokenizer.additional_special_tokens + num_list_text
+elif model_name =='bert-base-chinese':
+    from transformers import AutoTokenizer
+    print("model name:{}".format(model_name))
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 
 vocab_size = len(tokenizer)
@@ -325,7 +359,7 @@ for epoch in range(start_epoch, n_epochs):
     
     print("training time", time_since(time.time() - start))
     print("--------------------------------")
-    if (epoch-1) % config.test_interval == 0 or (epoch-1) > n_epochs - 5:
+    if (epoch-1) % test_interval == 0 or (epoch-1) > n_epochs - 5:
         value_ac = 0
         equation_ac = 0
         eval_total = 0
