@@ -14,11 +14,21 @@ Open Source Code for **"Expression Syntax Information Bottleneck for Math Word P
 
 ## Video Presentation
 
-🎬 **SIGIR 2022 Presentation Video**
+<p align="center">
+  <a href="picture/SIGIR22-sp1591.mp4">
+    <img src="https://img.shields.io/badge/🎬_Click_to_Download-SIGIR_2022_Presentation-red?style=for-the-badge" alt="Video Presentation">
+  </a>
+</p>
 
-[![Video](https://img.shields.io/badge/📹_Download-SIGIR_2022_Video-blue?style=for-the-badge)](picture/SIGIR22-sp1591.mp4)
+<p align="center">
+  <a href="picture/SIGIR22-sp1591.mp4">
+    <img src="picture/video_preview.png" width="600" alt="Click to download video">
+  </a>
+  <br>
+  <em>👆 Click the image above to download the presentation video</em>
+</p>
 
-> **Note**: GitHub 不支持直接播放视频。请点击上方按钮下载视频，或克隆仓库后在本地查看 `picture/SIGIR22-sp1591.mp4`。
+> 📺 **Note**: GitHub 不支持直接播放 MP4 视频。请点击上方图片或 [下载视频](picture/SIGIR22-sp1591.mp4) 后本地查看。
 
 ## Overview
 
