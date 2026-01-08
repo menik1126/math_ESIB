@@ -1,6 +1,6 @@
 # ESIB: Expression Syntax Information Bottleneck for Math Word Problems
 
-[![Paper](https://img.shields.io/badge/Paper-SIGIR%202022-blue)](https://dl.acm.org/doi/10.1145/3477495.3531826)
+[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2310.15664)
 [![Python](https://img.shields.io/badge/Python-3.6+-green)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.9.1-orange)](https://pytorch.org/)
 
@@ -11,6 +11,22 @@ Open Source Code for **"Expression Syntax Information Bottleneck for Math Word P
 <p align="center">
   <img src="picture/model_arch1.png" width="600" alt="Model Architecture">
 </p>
+
+## Video Presentation
+
+<p align="center">
+  <a href="picture/SIGIR22-sp1591.mp4">
+    <img src="https://img.shields.io/badge/🎬_Video-SIGIR_2022_Presentation-red?style=for-the-badge" alt="Video Presentation">
+  </a>
+</p>
+
+<p align="center">
+  <video src="picture/SIGIR22-sp1591.mp4" width="600" controls>
+    Your browser does not support the video tag. <a href="picture/SIGIR22-sp1591.mp4">Download the video</a>.
+  </video>
+</p>
+
+> 📺 **Note**: If the video doesn't play in your browser, you can [download it directly](picture/SIGIR22-sp1591.mp4) or view it locally after cloning the repository.
 
 ## Overview
 
@@ -139,7 +155,7 @@ If you find this work useful, please cite our paper:
 
 ## Paper Link
 
-📄 **ACM Digital Library**: [https://dl.acm.org/doi/10.1145/3477495.3531826](https://dl.acm.org/doi/10.1145/3477495.3531826)
+📄 **arXiv**: [https://arxiv.org/abs/2310.15664](https://arxiv.org/abs/2310.15664)
 
 ## License
 
