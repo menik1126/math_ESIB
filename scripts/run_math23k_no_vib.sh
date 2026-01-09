@@ -18,3 +18,5 @@ python run_seq2tree_bert_ultimate_divide_epoch.py \
 # Ablation Study: Without Variational Information Bottleneck
 # This script runs the model without the VIB component
 
+
+

@@ -1,5 +1,7 @@
 # ESIB: Expression Syntax Information Bottleneck for Math Word Problems
 
+<img src="picture/image.png" alt="SIGIR 2022" width="200"/>
+
 [![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2310.15664)
 [![Python](https://img.shields.io/badge/Python-3.6+-green)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.9.1-orange)](https://pytorch.org/)
