@@ -1,12 +1,19 @@
-# ESIB: Expression Syntax Information Bottleneck for Math Word Problems
+<p align="center">
+  <img src="picture/image.png" alt="SIGIR 2022" width="180"/>
+</p>
 
-<img src="picture/image.png" alt="SIGIR 2022" width="200"/>
+<h1 align="center">ESIB: Expression Syntax Information Bottleneck for Math Word Problems</h1>
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2310.15664)
-[![Python](https://img.shields.io/badge/Python-3.6+-green)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.9.1-orange)](https://pytorch.org/)
+<p align="center">
+  <a href="https://arxiv.org/abs/2310.15664"><img src="https://img.shields.io/badge/Paper-arXiv-red" alt="Paper"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.6+-green" alt="Python"></a>
+  <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-1.9.1-orange" alt="PyTorch"></a>
+</p>
 
-Open Source Code for **"Expression Syntax Information Bottleneck for Math Word Problems"** presented at **SIGIR 2022**.
+<p align="center">
+  Open Source Code for <strong>"Expression Syntax Information Bottleneck for Math Word Problems"</strong><br>
+  presented at <strong>SIGIR 2022</strong>
+</p>
 
 ## Model Architecture
 
