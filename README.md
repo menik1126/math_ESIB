@@ -24,20 +24,10 @@
 ## Video Presentation
 
 <p align="center">
-  <a href="picture/SIGIR22-sp1591.mp4">
-    <img src="https://img.shields.io/badge/🎬_Click_to_Download-SIGIR_2022_Presentation-red?style=for-the-badge" alt="Video Presentation">
-  </a>
+  <img src="picture/video_preview.png" width="600" alt="Presentation Video Preview">
 </p>
 
-<p align="center">
-  <a href="picture/SIGIR22-sp1591.mp4">
-    <img src="picture/video_preview.png" width="600" alt="Click to download video">
-  </a>
-  <br>
-  <em>👆 Click the image above to download the presentation video</em>
-</p>
-
-> 📺 **Note**: GitHub 不支持直接播放 MP4 视频。请点击上方图片或 [下载视频](picture/SIGIR22-sp1591.mp4) 后本地查看。
+> 📺 **Note**: The SIGIR 2022 presentation video is available in the [GitHub Releases](https://github.com/menik1126/math_ESIB/releases) section. Please download it from there.
 
 ## Overview
 
@@ -56,7 +46,7 @@ This repository implements ESIB (Expression Syntax Information Bottleneck), a no
 | Transformers | 4.3.0 | |
 | tqdm | 4.60.0 | |
 | pytorch_warmup | - | [Installation Guide](https://github.com/Tony-Y/pytorch_warmup) |
-| chinese_roberta | - | [Download Link](https://drive.google.com/file/d/1eHM3l4fMo6DsQYGmey7UZGiTmQquHw25/view) (put in `src/chinese_roberta`) |
+| chinese_roberta | - | Available in [GitHub Releases](https://github.com/menik1126/math_ESIB/releases) (put in `src/chinese_roberta`) |
 
 ## Installation
 
@@ -71,7 +61,7 @@ pip install transformers==4.3.0 tqdm==4.60.0 torch==1.9.1
 # Install pytorch_warmup
 pip install pytorch-warmup
 
-# Download chinese_roberta and place in src/chinese_roberta
+# Download chinese_roberta from GitHub Releases and place in src/chinese_roberta
 ```
 
 ## Dataset
