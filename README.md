@@ -46,7 +46,6 @@ This repository implements ESIB (Expression Syntax Information Bottleneck), a no
 | Transformers | 4.3.0 | |
 | tqdm | 4.60.0 | |
 | pytorch_warmup | - | [Installation Guide](https://github.com/Tony-Y/pytorch_warmup) |
-| chinese_roberta | - | Available in [GitHub Releases](https://github.com/menik1126/math_ESIB/releases) (put in `src/chinese_roberta`) |
 
 ## Installation
 
@@ -60,8 +59,6 @@ pip install transformers==4.3.0 tqdm==4.60.0 torch==1.9.1
 
 # Install pytorch_warmup
 pip install pytorch-warmup
-
-# Download chinese_roberta from GitHub Releases and place in src/chinese_roberta
 ```
 
 ## Dataset
